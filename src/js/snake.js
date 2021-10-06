@@ -1,6 +1,11 @@
 export default class Snake {
+  //create the snake scene
   constructor(scene) {
     this.scene = scene;
+    //define the movement interval in milliseconds with lastMoveTime and moveInterval:
+    this.lastMoveTime = 0;
+    // how often does the snake move? in milliseconds: (in this case, move every .5 second, see update() for more)
+    this.moveInterval = 500;
     //create a vector that starts the body movement direction:
     this.direction = Phaser.Math.Vector2.RIGHT;
     //the snake body is an array that takes more boxes as dots are "consumed":
@@ -35,9 +40,24 @@ export default class Snake {
   }
 
   update(time) {
-    //move the first element in the body array over time, this.direction -- change direction on keydown
-    this.body[0].x += this.direction.x;
-    this.body[0].y += this.direction.y;
+    // movement occurs if time passed is greater or equal to .5 second
+    //this causes the "choppy" movement of the snake
+    if(time >= this.lastMoveTime + this.moveInterval) {
+      //reset the lastMoveTime time to the time movement last ocurred:
+      this.lastMoveTime = time;
+      //then move!
+      this.move();
+    }
+  }
 
+  move() {
+    // move the "tail" to where the head used to be (the tail is "following" the head)
+    //this MUST be declared before the body[0] movement, or the squares will move as a stack
+    this.body[1].x = this.body[0].x;
+    this.body[1].y = this.body[0].y;
+    //move the first element in the body array over time, this.direction -- change direction on keydown
+    //use * num to change movement speed
+    this.body[0].x += this.direction.x * 15;
+    this.body[0].y += this.direction.y * 15;
   }
 }
