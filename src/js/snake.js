@@ -14,9 +14,9 @@ export default class Snake {
     this.body = [];
     // create the snake's head: left position, top position, height, width, hexDec color:
     //push the "head" box into the body array:
-    this.body.push(this.scene.add.rectangle(this.scene.game.config.width/2, this.scene.game.config.height/2 , this.tileSize , this.tileSize , 0xff0000).setOrigin(0));
+    this.body.push(this.scene.add.rectangle(this.scene.game.config.width/2, this.scene.game.config.height/2 , this.tileSize , this.tileSize , 0xCAEA7A).setOrigin(0)); 
     //add the food that will make the snake grow:
-    this.food = this.scene.add.rectangle(0,0, this.tileSize, this.tileSize, 0x00ff00).setOrigin(0);
+    this.food = this.scene.add.rectangle(0,0, this.tileSize, this.tileSize, 0xF9A1C6).setOrigin(0);
     //method to spawn the food in a random position:
     this.positionFood();
     //move the "head" of the body around with the arrow keys, e stands for event
@@ -61,14 +61,21 @@ export default class Snake {
   }
 
   move() {
+    // define the x and y positions of the head so we can compare it to the food location
+    let x = this.body[0].x + this.direction.x * this.tileSize;
+    let y = this.body[0].y + this.direction.y * this.tileSize;
+    // what happens when you "eat" the food (pass over the same x and y coordinates):
+    if(this.food.x === x && this.food.y === y) {
+      this.body.push(this.scene.add.rectangle(0, 0, this.tileSize , this.tileSize , 0xDDF0B9).setOrigin(0));
+      this.positionFood();
+    }
     //use a for loop to move each element of the body(starting at the last index, or the squares will stack), i=0 (the head on the lines following the loop) will move one point and all the other indexes will take the place of the index before them.
-    for (let i = this.body.length-1; i>0; i++) {
-      this.body[i].x += this.body[i-1].x;
-      this.body[i].y += this.body[i-1].y;
+    for (let i = this.body.length-1; i>0; i--) {
+      this.body[i].x = this.body[i-1].x;
+      this.body[i].y = this.body[i-1].y;
     }
     //move the first element in the body array over time, this.direction -- change direction on keydown
-    //use * num to change movement speed
-    this.body[0].x += this.direction.x * 15;
-    this.body[0].y += this.direction.y * 15;
+    this.body[0].x = x;
+    this.body[0].y = y;
   }
 }
