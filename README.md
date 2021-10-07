@@ -29,6 +29,7 @@ This is a simple Phaser recreation of the classic "Snake" game. Move the square 
 ## License
 
 MIT Copyright 2021 Chynna Lew
+Snake Sprite Sheet created by [Calciumtrice](https://twitter.com/calciumtrice?lang=en)
 
 ## Contact Information
 
