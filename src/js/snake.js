@@ -2,6 +2,8 @@ export default class Snake {
   //create the snake scene
   constructor(scene) {
     this.scene = scene;
+    //the snake body is an array that takes more boxes as dots are "consumed":
+    this.body = [];
     //define the movement interval in milliseconds with lastMoveTime and moveInterval:
     this.lastMoveTime = 0;
     // how often does the snake move? in milliseconds: (in this case, move every .5 second, see update() for more)
@@ -10,8 +12,6 @@ export default class Snake {
     this.tileSize = 16;
     //create a vector that starts the body movement direction:
     this.direction = Phaser.Math.Vector2.RIGHT;
-    //the snake body is an array that takes more boxes as dots are "consumed":
-    this.body = [];
     // create the snake's head: left position, top position, height, width, hexDec color:
     //push the "head" box into the body array:
     this.body.push(this.scene.add.rectangle(this.scene.game.config.width/2, this.scene.game.config.height/2 , this.tileSize , this.tileSize , 0xCAEA7A).setOrigin(0)); 

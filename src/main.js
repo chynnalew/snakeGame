@@ -1,4 +1,4 @@
-import MainScene from './mainScene.js';
+import MainScene from './js/mainScene.js';
 //create the game screen and properties
 const config = {
   width: 640,
