@@ -16,8 +16,8 @@ This is a simple Phaser recreation of the classic "Snake" game. Move the square 
 ## Setup/Installation Requirements
 
 * Download or clone [this](https://github.com/chynnalew/snakeGame) repository
-* on your local machine, navigate to snakeGame/index.html
-* open index.html in the browser
+* open the snakeGame directory in VSCode
+* right click on index.html to open a live server in the browser
 * the game starts when the browser loads
 * use the arrow keys to move
 * "eat" pink square to grow your snake

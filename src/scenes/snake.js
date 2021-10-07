@@ -1,3 +1,5 @@
+import Phaser from '../lib/phaser.js';
+
 export default class Snake {
   //create the snake scene
   constructor(scene) {
