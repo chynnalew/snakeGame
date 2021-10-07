@@ -6,17 +6,27 @@ export default class Snake {
     this.lastMoveTime = 0;
     // how often does the snake move? in milliseconds: (in this case, move every .5 second, see update() for more)
     this.moveInterval = 500;
+    // use this to set all widths and heights the same
+    this.tileSize = 16;
     //create a vector that starts the body movement direction:
     this.direction = Phaser.Math.Vector2.RIGHT;
     //the snake body is an array that takes more boxes as dots are "consumed":
     this.body = [];
-    // create the box: left, top, height, width, hexDec color, push the "head" box into the body array:
-    this.body.push(this.scene.add.rectangle(0,0,16,16,0xff0000).setOrigin(0));
-    // add a second box to the body
-    this.body.push(this.scene.add.rectangle(0,0,16,16,0x0000ff).setOrigin(0));
+    // create the snake's head: left position, top position, height, width, hexDec color:
+    //push the "head" box into the body array:
+    this.body.push(this.scene.add.rectangle(this.scene.game.config.width/2, this.scene.game.config.height/2 , this.tileSize , this.tileSize , 0xff0000).setOrigin(0));
+    //add the food that will make the snake grow:
+    this.food = this.scene.add.rectangle(0,0, this.tileSize, this.tileSize, 0x00ff00).setOrigin(0);
+    //method to spawn the food in a random position:
+    this.positionFood();
     //move the "head" of the body around with the arrow keys, e stands for event
-    scene.input.keyboard.on('keydown', e => {this.keydown(e);
-    });
+    scene.input.keyboard.on('keydown', e => this.keydown(e));
+  }
+
+  positionFood() {
+    //get a random number between zero and the game width/tileSize, in an int (Math.floor)
+    this.food.x = Math.floor(Math.random() * this.scene.game.config.width / this.tileSize) * this.tileSize;
+    this.food.y = Math.floor(Math.random() * this.scene.game.config.height / this.tileSize) * this.tileSize;
   }
 
   keydown(event) {
@@ -51,10 +61,11 @@ export default class Snake {
   }
 
   move() {
-    // move the "tail" to where the head used to be (the tail is "following" the head)
-    //this MUST be declared before the body[0] movement, or the squares will move as a stack
-    this.body[1].x = this.body[0].x;
-    this.body[1].y = this.body[0].y;
+    //use a for loop to move each element of the body(starting at the last index, or the squares will stack), i=0 (the head on the lines following the loop) will move one point and all the other indexes will take the place of the index before them.
+    for (let i = this.body.length-1; i>0; i++) {
+      this.body[i].x += this.body[i-1].x;
+      this.body[i].y += this.body[i-1].y;
+    }
     //move the first element in the body array over time, this.direction -- change direction on keydown
     //use * num to change movement speed
     this.body[0].x += this.direction.x * 15;
