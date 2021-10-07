@@ -1,3 +1,4 @@
+import Phaser from './lib/phaser.js';
 import MainScene from './js/mainScene.js';
 //create the game screen and properties
 const config = {
