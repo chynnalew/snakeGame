@@ -23,6 +23,7 @@ export default class Snake {
     this.positionFood();
     //move the "head" of the body around with the arrow keys, e stands for event
     scene.input.keyboard.on('keydown', e => this.keydown(e));
+    this.score = 1;
   }
 
   positionFood() {
@@ -33,7 +34,7 @@ export default class Snake {
 
   keydown(event) {
     //used to see what the "keyCode" (case) numbers are when you press the arrow keys
-    console.log(event);
+    // console.log(event);
     //used to change direction of "snake" with each keydown
     switch(event.keyCode) {
       case 37: //left arrow
@@ -69,7 +70,12 @@ export default class Snake {
     // what happens when you "eat" the food (pass over the same x and y coordinates):
     if(this.food.x === x && this.food.y === y) {
       this.body.push(this.scene.add.rectangle(0, 0, this.tileSize , this.tileSize , 0xDDF0B9).setOrigin(0));
+      //increment the score up by 1:
+      this.score += 1;
+      console.log(this.score);
+      // "eat" and place a new randomized food position:
       this.positionFood();
+      // make the snake move faster after each snack, but stop at 50 because then it gets too fast
       if (this.moveInterval > 50) {
         this.moveInterval -= 10;
       }
