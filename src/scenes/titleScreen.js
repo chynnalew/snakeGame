@@ -41,7 +41,6 @@ export default class TitleScreen extends Phaser.Scene {
     snake.play('walk');
     //change scene with keystroke
     this.input.keyboard.on('keydown', () => {
-      console.log("hello?");
       this.scene.start('MainScene')
     });
     

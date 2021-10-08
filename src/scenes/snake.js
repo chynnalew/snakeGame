@@ -24,6 +24,7 @@ export default class Snake {
     //move the "head" of the body around with the arrow keys, e stands for event
     scene.input.keyboard.on('keydown', e => this.keydown(e));
     this.score = 1;
+    this.dead = false;
   }
 
   positionFood() {
@@ -72,7 +73,6 @@ export default class Snake {
       this.body.push(this.scene.add.rectangle(0, 0, this.tileSize , this.tileSize , 0xDDF0B9).setOrigin(0));
       //increment the score up by 1:
       this.score += 1;
-      console.log(this.score);
       // "eat" and place a new randomized food position:
       this.positionFood();
       // make the snake move faster after each snack, but stop at 50 because then it gets too fast
@@ -90,13 +90,18 @@ export default class Snake {
     this.body[0].y = y;
     //kill the snake when it goes off the screen
     if (this.body[0].x < 0 || this.body[0].x >= this.scene.game.config.width || this.body[0].y < 0 || this.body[0].y >= this.scene.game.config.height) {
-      this.scene.scene.restart();
+      this.dead = true;
     }
     //kill the snake if it eats its own tail
     for (let i=1; i<this.body.length ; i++) {
       if (this.body[0].x === this.body[i].x && this.body[0].y === this.body[i].y) {
-        this.scene.scene.restart();
+        this.dead = true;
       }
     }
+  }
+
+  gameOver() {
+    this.snake.body.destroy();
+    this.scene.add.text(0,0,'GAME OVER', {fontSize: '50px', fill: '#ffffff' })
   }
 }
