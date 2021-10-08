@@ -9,6 +9,7 @@ export default class MainScene extends Phaser.Scene {
   create() {
     //add the snake to the game
     this.snake = new Snake(this);
+    
   }
 
   update(time) {

@@ -9,7 +9,7 @@ export default class Snake {
     //define the movement interval in milliseconds with lastMoveTime and moveInterval:
     this.lastMoveTime = 0;
     // how often does the snake move? in milliseconds: (in this case, move every .5 second, see update() for more)
-    this.moveInterval = 500;
+    this.moveInterval = 300;
     // use this to set all widths and heights the same
     this.tileSize = 16;
     //create a vector that starts the body movement direction:
@@ -70,6 +70,9 @@ export default class Snake {
     if(this.food.x === x && this.food.y === y) {
       this.body.push(this.scene.add.rectangle(0, 0, this.tileSize , this.tileSize , 0xDDF0B9).setOrigin(0));
       this.positionFood();
+      if (this.moveInterval > 50) {
+        this.moveInterval -= 10;
+      }
     }
     //use a for loop to move each element of the body(starting at the last index, or the squares will stack), i=0 (the head on the lines following the loop) will move one point and all the other indexes will take the place of the index before them.
     for (let i = this.body.length-1; i>0; i--) {
