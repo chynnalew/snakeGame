@@ -19,6 +19,11 @@ export default class MainScene extends Phaser.Scene {
     timerText = this.add.text(10, 10, 'timer: 0', {fill: '#808080'});
     //add the snake to the game
     this.snake = new Snake(this);
+    //start music for the scene (loaded in the titleScreen)
+    this.sound.play('music', {
+      loop:true,
+      volume:0.3
+    })
     }
     
     update(time) {
@@ -47,6 +52,8 @@ export default class MainScene extends Phaser.Scene {
     this.time.destroy();
     //stop the snake
     this.snake.body.visible = false;
+    //stop the music when you die
+    this.sound.stopAll();
   }
 
 }

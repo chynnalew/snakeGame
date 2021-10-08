@@ -13,6 +13,7 @@ export default class TitleScreen extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32
     });
+    this.load.audio('music', 'assets/BlazerRail.wav')
   }
 
   create () {
